@@ -5,9 +5,12 @@
     $dbname = "my_api";
 
     $con = new mysqli($server, $username, $password, $dbname);
+    $a = "Hello";
+    /*
     if($con->connect_error){
         die("Connection failed!".$con->connect_error);
     }else{
         echo "Congratulation! Connect successfully!";
     }
+    */
 ?>

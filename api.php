@@ -6,7 +6,8 @@
             getMethod();
             break;
         case 'POST':
-            echo '{"name": "POST....Dr. Rashid"}';
+            $data = json_decode(file_get_contents('php://input'), true);
+            postMethod($data);
             break;
         case 'PUT':
             echo '{"name": "PUT....Dr. Rashid"}';
@@ -33,4 +34,16 @@
         }
         
     }
+    function postMethod($data){
+        include 'db.php';
+        $name = $data["name"];
+        $email = $data["email"];
+        $sql = "INSERT INTO learnhunter(name, email, created_at) VALUES('$name', '$email', now())";
+        if(mysqli_query($con, $sql)){
+            echo '{"result":"Data successfully inserted!"}';
+        }else{
+            echo '{"result":"Sorry! Data insertion failed"}';
+        }
+    }
+
 ?>

@@ -10,7 +10,8 @@
             postMethod($data);
             break;
         case 'PUT':
-            echo '{"name": "PUT....Dr. Rashid"}';
+            $data = json_decode(file_get_contents('php://input'), true);
+            putMethod($data);
             break;
         case 'DELETE':
             echo '{"name": "DELETE....Dr. Rashid"}';
@@ -19,6 +20,7 @@
             echo '{"name": "Default"}';
             break;
     }
+    //Data read method
     function getMethod(){
         include 'db.php';
         $sql = "SELECT * FROM  	learnhunter";
@@ -34,6 +36,7 @@
         }
         
     }
+    //Data insert method
     function postMethod($data){
         include 'db.php';
         $name = $data["name"];
@@ -43,6 +46,19 @@
             echo '{"result":"Data successfully inserted!"}';
         }else{
             echo '{"result":"Sorry! Data insertion failed"}';
+        }
+    }
+    //Data edit method
+    function putMethod($data){
+        include 'db.php';
+        $id = $data["id"];
+        $name = $data["name"];
+        $email = $data["email"];
+        $sql = "UPDATE learnhunter SET name='$name', email='$email', created_at=now() WHERE id='$id'";
+        if(mysqli_query($con, $sql)){
+            echo '{"result":"Data update successfully!"}';
+        }else{
+            echo '{"result":"Sorry! Data update failed"}';
         }
     }
 

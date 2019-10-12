@@ -14,7 +14,8 @@
             putMethod($data);
             break;
         case 'DELETE':
-            echo '{"name": "DELETE....Dr. Rashid"}';
+            $data = json_decode(file_get_contents('php://input'), true);
+            deleteMethod($data);
             break;
         default:
             echo '{"name": "Default"}';
@@ -59,6 +60,17 @@
             echo '{"result":"Data update successfully!"}';
         }else{
             echo '{"result":"Sorry! Data update failed"}';
+        }
+    }
+    //Data delete method
+    function deleteMethod($data){
+        include 'db.php';
+        $id = $data["id"];
+        $sql = "DELETE FROM learnhunter WHERE id=$id";
+        if(mysqli_query($con, $sql)){
+            echo '{"result":"Data deleted successfully!"}';
+        }else{
+            echo '{"result":"Sorry! Data delete failed"}';
         }
     }
 
